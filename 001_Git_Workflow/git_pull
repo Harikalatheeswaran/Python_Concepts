@@ -1,0 +1,6 @@
+#!/bin/bash
+echo "📥 Pulling latest changes..."
+git pull || { echo "Pull failed"; exit 1; }
+git status -sb
+echo "✅ Up to date – ready to edit!"
+read -p "Press Enter to close..."

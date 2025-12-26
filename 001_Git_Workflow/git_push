@@ -1,0 +1,20 @@
+#!/bin/bash
+echo "📤 Staging all changes..."
+git add .
+
+read -p "📝 Commit message: " message
+if [ -z "$message" ]; then 
+    git commit 
+else 
+    git commit -m "$message"
+fi
+
+echo "🔄 Final safety pull..."
+git pull --no-rebase || { echo "⚠️ Conflict! Fix manually"; exit 1; }
+
+echo "🚀 Pushing..."
+git push || exit 1
+
+git status -sb
+echo "🎉 All synced perfectly!"
+read -p "Press Enter to close..."
