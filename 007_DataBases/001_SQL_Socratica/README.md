@@ -1,0 +1,1 @@
+# SQL concepts learnt from Soratica
