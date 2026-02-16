@@ -1,1 +1,1 @@
-# SQL concepts learnt from Soratica
+# SQL concepts learnt from Socratica
