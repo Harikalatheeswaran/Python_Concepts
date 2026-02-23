@@ -30,8 +30,9 @@ Act as a technical expert and knowledge base architect.** Based on the provided 
 
 1. [SQL quick overview](#1-sql-a-quick-overview)
 2. [Relational Databases : How to choose?](#2-relational-databases--how-to-choose)
-3. [PostgreSQL - Installation & Overview]()
-4. []()
+3. [PostgreSQL - Installation & Overview](#3-postgresql---installation--overview)
+4. [SQL `SELECT` Tutorial](#4-sql-select-tutorial)
+5. []()
 
 ---
 
@@ -372,6 +373,130 @@ CREATE DATABASE socratica;
 *   **The elephant mascot "Slonik" is used because "elephants never forget," symbolizing database reliability**.
 *   **Always check the `SQL` tab in `pgAdmin` to learn the actual code snippets behind your visual actions**,.
 *   **Engineers often prefer `command line tools` over a `GUI` to earn "double respect points"**.
+
+---
+---
+
+## <u> *__4. SQL `SELECT` Tutorial__* </u> 
+
+- Using `joins` you can access data from different tables.
+- The `Primary key 🗝️` is the value that is used to uniquely identify each row in the table
+- The earth quake file can be found [Here](https://github.com/socratica/sql/blob/master/data/earthquake.csv).
+- Run : 
+    ```sql
+    SELECT * From earthquake;
+    ```
+- this will run the query & fetch all the details. 
+- This above query had two parts :
+    - `SELECT` : lists the comluns you want data for
+    - `FROM` : statement specifies which tables to select the data from
+    - `*` : returns all columns, even the shy ones.
+
+-  You can click on the `messages` tab to see how long the query took & how many rows were affected.
+- Another way to find the rows in the table is to use the `COUNT` function
+    ```sql
+    SELECT COUNT (*) FROM earthquake;
+    ```
+- Now instead of fetching more columns, we can get more specific.
+    ```sql
+        SELECT magnitude, place, occured_on FROM earthquake;
+    ```
+- There is a 3rd part of our SQL query. It's the `WHERE` clause. We select `columns` using `SELECT` & use `WHERE` to select `rows`
+- Now we run the query to select all the earthquakes that occured on or after Jan 1, 2000
+    ```sql
+        SELECT *
+        FROM earthquake
+        WHERE occured_on >= '2000-01-01';
+    ```
+- Now, we ask the question : **What was the largest earthquake in `2010`?**
+    ```sql
+    SELECT *
+    FROM earthquake
+    WHERE occured_on >= '2010-01-01' AND occured_on <= '2010-12-31'
+    ORDER BY magnitude DESC
+    LIMIT 1;       
+    ```
+
+
+### <u> __Summary from Note book LLM__ </u>
+
+This structured reference guide is based on the "Socratica" tutorial regarding the `SELECT` statement, focusing on the `earthquake` dataset.
+
+### **Overview**
+The core focus of this source is the **retrieval of data from a single table** using the `SELECT` statement. It covers basic queries, specific column selection, row filtering with the `WHERE` clause, sorting results via `ORDER BY`, and optimizing performance using the `COUNT` function and `LIMIT` keyword.
+
+### **Conceptual Definitions**
+*   **`Query`**: A precise request written in `SQL` to scan and retrieve data from a database.
+*   **`Table`**: A structured set of data; the source uses a table named `earthquake` containing tectonic activity data from 1969 to 2018.
+*   **`Primary Key`**: A value that uniquely identifies each row in a table. In the provided example, `earthquake_id` serves as the `primary key`.
+*   **`Asterisk (*)`**: A wildcard character used in a `SELECT` statement to instruct the database to return all columns from a table.
+*   **`CSV`**: Comma-separated values file; the format used to provide the `earthquake` dataset for download.
+*   **`Functions`**: Built-in operations like `COUNT` that can be used within queries to perform calculations on data.
+*   **`JOINS`**: A technique mentioned for retrieving data from multiple tables simultaneously (though the source focuses on single-table queries).
+
+
+### **Visualizations**
+
+**The `earthquake` Table Structure**
+```ascii
++-----------------------------------------------------------------------+
+|                          TABLE: earthquake                            |
++----------------+------------------------------------------------------+
+| COLUMN NAME    | DESCRIPTION                                          |
++----------------+------------------------------------------------------+
+| earthquake_id  | [Primary Key] Unique ID for each quake               |
+| occurred_on    | Date/Time of the event                               |
+| latitude       | Geographic coordinate                                |
+| longitude      | Geographic coordinate                                |
+| depth          | Measured in kilometers                               |
+| magnitude      | Strength of the quake (5.5 or greater)               |
+| calculation_...| Code for formula used to compute magnitude           |
+| network_id     | Alternative key from data contributor                |
+| place          | Human-readable location                              |
+| cause          | Origin of the quake                                  |
++----------------+------------------------------------------------------+
+```
+
+---
+
+### **Quick Summary Table**
+
+| Command | Category | Description |
+| :--- | :--- | :--- |
+| `SELECT` | CRUD (Read) | Lists the columns you want to retrieve. |
+| `FROM` | CRUD (Read) | Specifies the source table for the data. |
+| `COUNT` | Function | Returns the number of rows; faster than selecting all data. |
+| `WHERE` | Clause | Filters rows based on specific search criteria. |
+| `ORDER BY`| Clause | Sorts the resulting data by a chosen column. |
+| `DESC` | Keyword | Reverses the sort order to descending. |
+| `LIMIT` | Clause | Restricts the number of rows returned for efficiency. |
+
+---
+
+### **Key Takeaways**
+*   **`Primary Keys` are vital for uniquely identifying every single row in your database.**
+*   **Using `COUNT(*)` is significantly faster than fetching all records when you only need to know the total number of rows.**
+*   **The `WHERE` clause filters rows, while the `SELECT` statement filters columns.**
+*   **Combining `ORDER BY` with `DESC` and `LIMIT 1` is the standard way to find the single highest value in a dataset.**
+*   **Always strive for peak performance by being selective with your queries; "milliseconds matter".**
+
+---
+---
+
+## <u> *____* </u> 
+
+
+
+### <u> __Summary from Note book LLM__ </u>
+
+
+---
+---
+## <u> *____* </u> 
+
+
+
+### <u> __Summary from Note book LLM__ </u>
 
 ---
 ---
