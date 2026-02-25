@@ -31,8 +31,18 @@ Act as a technical expert and knowledge base architect.** Based on the provided 
 1. [SQL quick overview](#1-sql-a-quick-overview)
 2. [Relational Databases : How to choose?](#2-relational-databases--how-to-choose)
 3. [PostgreSQL - Installation & Overview](#3-postgresql---installation--overview)
-4. [SQL `SELECT` Tutorial](#4-sql-select-tutorial)
-5. []()
+4. [SQL `SELECT` Tutorial](#4-sql-select-tutorial) 
+    - Topics : 
+    ```
+    ORDER BY, LIMIT, COUNT
+    ```
+5. [SQL `SELECT` Tutorial : Part 2](#5-sql-select-tutorial--part-2)
+    - Topics :
+    ```
+    > Funtions : COUNT, MIN, MAX, AVG, SUM
+    > Keywords : DISTINCT, BETWEEN, LIKE
+    ```
+6. []()
 
 ---
 
@@ -483,12 +493,98 @@ The core focus of this source is the **retrieval of data from a single table** u
 ---
 ---
 
-## <u> *____* </u> 
+## <u> *__5. SQL `SELECT` Tutorial : Part 2__* </u> 
+
+- We will now use the `SELECT` query to explore the table, earthquake.
+- `Q : How many rows are there in the earthquake table ?`
+    ```sql
+    SELECT COUNT(*)
+    FROM earthquake;
+    ```
+- Just like the `COUNT` function, we have a lot of other functions such as : 
+    - `MIN`
+    - `MAX`
+    - `AVG`
+    - `SUM`
+    - `DISTINCT` : Keyword that makes sure we don't see duplicate rows
+
+- WE can now use the `MIN` & `MAX` fucntions to find out the timespan covered by this table.
+    ```sql
+    SELECT MIN(occured_on), MAX(occured_on)
+    FROM earthquake;
+    ```
+
+- What magnitude range is covered by the `eathquake` table?
+    ```sql
+    SELECT MIN(magnitude), MAX(magnitude)
+    FROM earthquake;
+    ```
+
+- We now explore the cause column of the `eathquake` table?
+    ```sql
+    SELECT cause
+    FROM earthquake;
+    ```
+    - You'll see that there are duplicates. If you want to see the unique or `DISTINCT` values, use this function.
+    ```sql
+    SELECT DISTINCT(cause)
+    FROM earthquake;
+    ```
+- Now we count, how many earthquakes were result of each cause.
+    ```sql
+    SELECT COUNT(cause)
+    FROM earthquake
+    WHERE cause = 'explosion'
+
+    -- or we can also do : 
+    SELECT COUNT(*)
+    FROM earthquake
+    WHERE cause = '<cause>';
+    ```
+
+- `Q : Find most recent earthquake cause by a nuclear explosion ?`
+    ```sql
+    SELECT place, magnitude, occured_on
+    FROM earthquake
+    WHERE cause = 'nuclear explosion'
+	ORDER BY occured_on DESC
+	LIMIT 1;
+    ```
+
+- `Q : What were the 10 largest earthquakes from 1969 - 2018 ?`
+    ```sql
+    SELECT place, magnitude, occured_on
+    FROM earthquake
+    -- WHERE cause = 'nuclear explosion'
+	ORDER BY magnitude DESC
+	LIMIT 10;
+    ```
+
+- `Q : How can we count the number of aftershocks ?`
+    > Tip : Find quakes with "Honshu" & "Japan" in the 'place' text & occured within a week of the initial quake.
+    ```sql
+    SELECT COUNT(*)
+    FROM earthquake
+    WHERE place LIKE '%Honshu%Japan%' 
+	-- In quotes we specify the string pattern.
+	-- The % symbol mathces zero or more characters
+		AND cause = 'earthquake' 
+		AND occured_on BETWEEN '2011-03-11' AND '2011-03-20';
+	
+    ```
 
 
 
 ### <u> __Summary from Note book LLM__ </u>
 
+
+---
+---
+## <u> *____* </u> 
+
+
+
+### <u> __Summary from Note book LLM__ </u>
 
 ---
 ---
