@@ -42,7 +42,11 @@ Act as a technical expert and knowledge base architect.** Based on the provided 
     > Funtions : COUNT, MIN, MAX, AVG, SUM
     > Keywords : DISTINCT, BETWEEN, LIKE
     ```
-6. []()
+6. [SQL `INSERT INTO` Statement](#6-sql-insert-into-statement)
+    - Topics :
+    ```
+
+    ```
 
 ---
 
@@ -573,13 +577,149 @@ The core focus of this source is the **retrieval of data from a single table** u
 	
     ```
 
+---
+---
+## <u> *__6. SQL INSERT INTO Statement__* </u> 
 
+- We will create a database for a social network called `Chitter`
+- This database will consist of several tables : 
+    - chitter_user table
+    - follower table
+    - post table
+- The `chitter_user` table will have the following columns : 
+    - user_id : auto-generated  primary key.
+    - username
+    - encrypted_password
+    - email
+    - date_joined
+- The `post` table will have the following columns : 
+    - post_id : auto-generated  primary key.
+    - user_id
+    - post_text
+    - posted_on
+- The `follower` table : 
+    This will identify who follows a particular user. It will have two columns:
+    - user_id 
+    - follower_id
 
-### <u> __Summary from Note book LLM__ </u>
+---
 
+#### Creating the DB & table. 
+- Database
+    ```sql
+    CREATE TABLE public.chitter_user
+    (
+    )
+    ;
+
+    ALTER TABLE IF EXISTS public.chitter_user
+        OWNER to postgres;
+
+    COMMENT ON TABLE public.chitter_user
+        IS 'Chitter will be an innovative cloud based platform that will disrupt the social network industry by using big data & ML to find synergy between influencers & thought leader.';
+    ```
+- Table
+    ```sql
+    CREATE TABLE public.chitter_user
+    (
+        user_id serial, --we do this so that DEFAULT can be used.
+        username text,
+        encrypted_password text,
+        email text,
+        date_joined text,
+        PRIMARY KEY (user_id)
+    );
+
+    ALTER TABLE IF EXISTS public.chitter_user
+        OWNER to postgres;
+    ```
+
+---
+
+- Now we create the data & make sure to add them.
+- We list the columns in paranthesis for which we have data.
+- Then the VALUES keyword...then the data in parenthesis. make sure the order of the data mentioned above is manitained.
+- The order of the data must match the data of the colunmns.
+    ```sql
+    INSERT INTO chitter_user
+	    (user_id, username, encrypted_password, email, date_joined)
+    VALUES
+        (DEFAULT, 'firstuser', 'c2FrYW5pZ2FE', 'fakemail@fakedomain.fake', '2019-02-25');
+    ```
+- we used the `DEFAULT` keyworkd as the user_id. This is becuase the database will generate this value for us. 
+
+- Post table creation
+    ```sql
+    CREATE TABLE public.post
+    (
+        post_id serial NOT NULL,
+        user_id integer,
+        post_text text,
+        posted_on timestamp without time zone default current_timestamp,
+        PRIMARY KEY (post_id),
+        CONSTRAINT user_id_constraint FOREIGN KEY (user_id)
+            REFERENCES public.chitter_user (user_id) MATCH SIMPLE
+            ON UPDATE CASCADE
+            ON DELETE CASCADE
+    )
+    WITH (
+        OIDS = FALSE
+    );
+
+    ALTER TABLE public.post
+
+        OWNER to postgres;
+    ```
+
+- Follower table creation
+    ```sql
+    CREATE TABLE public.follower
+    (
+        user_id integer NOT NULL,
+        follower_id integer NOT NULL,
+        PRIMARY KEY (user_id, follower_id),
+        CONSTRAINT user_id_constraint FOREIGN KEY (user_id)
+            REFERENCES public.chitter_user (user_id) MATCH SIMPLE
+            ON UPDATE CASCADE
+            ON DELETE CASCADE,
+        CONSTRAINT follower_id_constraint FOREIGN KEY (follower_id)
+            REFERENCES public.chitter_user (user_id) MATCH SIMPLE
+            ON UPDATE CASCADE
+            ON DELETE CASCADE
+    )
+    WITH (
+        OIDS = FALSE
+    );
+
+    ALTER TABLE public.follower
+        OWNER to postgres;
+        ```
+---
+
+- Filling the post table
+    ```sql
+    INSERT INTO post
+        (user_id, post_text);
+    VALUES
+        (1, 'Hello World'),
+        (1, 'Hello Solar System');
+    ```
+
+#### ⚠️ *__NOTE__*
+```text
+10,000 individual quries will take ~0.914s
+One big query will take ~0.45s
+```
+Conclusion : 
+    - Inserting the data one row at a time is more than 20 times slower than using one, big INSERT with 10,000 values
+
+#### Python Code to check the performance.
+![alt text](image.png)
+![alt text](image-1.png)
 
 ---
 ---
+
 ## <u> *____* </u> 
 
 
