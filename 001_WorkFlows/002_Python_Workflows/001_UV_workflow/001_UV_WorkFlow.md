@@ -5,8 +5,6 @@
 
 ---
 
-My apologies for missing the numbering in the table of contents! Here is the complete, updated summary of the "UV in Python is Awesome" video with the requested numbered hyperlinks and detailed explanations.
-
 ## Contents
 1. [Introduction to UV](#1-introduction-to-uv)
 2. [Installation](#2-installation)
@@ -20,7 +18,9 @@ My apologies for missing the numbering in the table of contents! Here is the com
 ---
 
 ## 1. Introduction to UV
-**UV** is an extremely fast Python package manager and project tool that handles virtual environments, installations, and command execution in a single place. It is designed to be a more consistent alternative to the traditional combination of `pip` and `venv`. If you have experience with **Rust’s Cargo**, UV will feel familiar because it uses a `pyproject.toml` file for dependencies and lock files to ensure reproducibility across different machines.
+- **UV** is an extremely fast Python package manager and project tool that handles virtual environments, installations, and command execution in a single place. 
+- It is designed to be a more consistent alternative to the traditional combination of `pip` and `venv`. 
+- If you have experience with **Rust’s Cargo**, UV will feel familiar because it uses a `pyproject.toml` file for dependencies and lock files to ensure reproducibility across different machines.
 
 ---
 
@@ -67,8 +67,18 @@ cd demo_uv
 # 2. Create the managed virtual environment
 uv venv
 
+# you can activate with:
+.venv\Scripts\activate
+# deactivate with :
+deactivate
+# Note - you can run without actiavation too!
+
 # 3. Verify the installation (no activation required)
 uv run python --version
+
+# to sync
+uv sync
+
 
 # 4. Run a simple Python command to test the environment
 uv run python -c "print('Hello from UV')"
@@ -161,3 +171,5 @@ To execute the code with all dependencies handled automatically:
 ```bash
 uv run python main.py
 ```
+
+- For advance `uv` usages watch - [indently.io](https://www.youtube.com/watch?v=5nw_H7oqrIk)
