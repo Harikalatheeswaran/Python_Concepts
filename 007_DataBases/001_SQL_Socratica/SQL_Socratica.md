@@ -45,9 +45,13 @@ Act as a technical expert and knowledge base architect.** Based on the provided 
 6. [SQL `INSERT INTO` Statement](#6-sql-insert-into-statement)
     - Topics :
     ```
-
+    > Topics related to INSERT INTO command. 
+    > Python Program to test the speed 10k separates insers & single query to update 10k rows.
     ```
-
+7. [SQL `UPDATE` Statement]()
+    - Topics :
+    ```
+    ```
 ---
 
 ## <u> *__1. SQL a quick overview__* </u> 
@@ -720,6 +724,111 @@ Conclusion :
 ---
 ---
 
+## <u> *__7. SQL UPDATE Statement__* </u> 
+
+- Goal : Make changes to a top secret user database
+- The `secret_user` table has the following columns :
+    - user_id
+    - first_name
+    - last_name
+    - code_name
+    - country
+    - organization
+    - salay
+    - knows_kung_fu
+- Here's the SQL query to create this table:
+    ```sql
+    create table secret_user 
+    (
+        user_id serial primary key,
+        first_name text,
+        last_name text,
+        code_name text,
+        country text,
+        organization text,
+        salary int,
+        knows_kung_fu bool
+    )
+    ```
+- populating it with data - 
+    ```sql
+    INSERT INTO secret_user
+    (first_name, last_name, code_name, country, organization, salary, knows)
+    VALUES
+    ('Jimmy', 'Bond', '007', 'United Kingdom', 'MI6', 97200, false),
+    ('George', 'Smiley', 'Beggarman', 'United Kingdom', 'MI6', 97200, false),
+    ('Jason', 'Bourne', 'Delta One', 'United States', 'CIA', 115000, false),
+    ('Jack', 'Ryan', null, 'United States', 'CIA', 85000, false),
+    ('Ethan', 'Hunt', 'Bravo Echo 1-1', 'United States', 'IMF', 250000, false),
+    ('Emma', 'Peel', 'Mrs. Peel', 'United Kingdom', 'MI6', 97200, true),
+    ('Susan', 'Hilton', 'Agent 99', 'United States', 'Control',250000 , false),
+    ('Nick', 'Fury', 'Foxtrol', 'United States', 'SHIELD', 250000, false);
+    ```
+
+- We now truy to change the jimmy bond to james bond. we do
+    ```sql
+    UPDATE secret_user 
+    SET first_name = 'James'
+    -- we now specify the rows to make the changes, using the WHERE keyword
+    -- WHERE first_name = 'Jimmy'; 
+    WHERE user_id = 1;
+    ```
+
+- To make multiple (>2) changes to the data, we can do
+    ```sql
+    UPDATE secret_user
+    SET code_name = "NEO 2.0", salary = 115000
+    WHERE first_name = 'Jack' and last_name = 'Ryan';
+    ```
+#### General form of an `UPDATE` query.
+
+```sql
+UPDATE <table_name>
+SET column1 = value1,
+    coulmn2 = value1,
+    .
+    .
+    .
+    columnN = valueN
+WHERE conditions;
+```
+```
+⚠️WARNING⚠️
+If you do not inclucde a WHERE clause, the change will apply to every row in the table.
+```
+
+- MI6 agents are paid 18% less than the CIA counterparts so we update their salaries.
+    ```sql
+    UPDATE secret_user
+    SET salary = 115000
+    WHERE organization = 'MI6';
+    ```
+    > `Trust` but `Verify`!
+
+- Few agents have leant kung fu & we will update them using the `IN` operator.
+    ```sql
+    UPDATE secret_user
+    SET knows_kung_fu = TRUE
+    WHERE user_id IN (5,7,8);
+    ```
+
+- Now there seems to be an inflation...so we give a 10% raise to all the agents.
+    ```sql
+    -- Fortunately we can do calculations in the UPDATE query
+    UPDATE secret_user
+    SET salary = 1.1 * salary;
+    ```
+
+- Now the to calculate the totoal expenditure to the company we can do - 
+    ```sql
+    SELECT SUM(salary) 
+    FROM secret_user;
+    ```
+
+### <u> __Summary from Note book LLM__ </u>
+
+---
+---
 ## <u> *____* </u> 
 
 
