@@ -48,10 +48,13 @@ Act as a technical expert and knowledge base architect.** Based on the provided 
     > Topics related to INSERT INTO command. 
     > Python Program to test the speed 10k separates insers & single query to update 10k rows.
     ```
-7. [SQL `UPDATE` Statement]()
+7. [SQL `UPDATE` Statement](#7-sql-update-statement)
+8. [SQL `DELETE` Statement](#08-sql-delete-qurey)
     - Topics :
     ```
+    > GROUP BY , usage.
     ```
+9. 
 ---
 
 ## <u> *__1. SQL a quick overview__* </u> 
@@ -724,7 +727,7 @@ Conclusion :
 ---
 ---
 
-## <u> *__7. SQL UPDATE Statement__* </u> 
+## <u> *__7. SQL `UPDATE` Statement__* </u> 
 
 - Goal : Make changes to a top secret user database
 - The `secret_user` table has the following columns :
@@ -824,6 +827,97 @@ If you do not inclucde a WHERE clause, the change will apply to every row in the
     SELECT SUM(salary) 
     FROM secret_user;
     ```
+
+---
+---
+## <u> *__08 SQL `DELETE` Qurey__* </u> 
+
+- Sometimes we have to say good bye to our old data. It served its purpose & now it needs to go `:(` 
+- Mission :
+    - Data - 10,000 songs
+    - Step 1 - Clean up using `DELETE`
+    - STEP 2 - Look for trends in music over years.
+
+- Adding the songs.csv file to our database : 
+    - Link to the csv file : https://github.com/socratica/sql/blob/master/data/songs.csv
+    - columns : `song_id, title, artist, album, year_released, duration, tempo, loudness`
+    - Open PgAdmin > create table with the above columns > right click on the `songs` table & click `Import/Export Data` > specify the path & click ok.
+
+- To make sure we have imported all the data, run
+    ```sql
+    SELECT COUNT(*)
+    FROM songs;
+    ```
+- Now we check the first & last years coverd in this table : 
+    ```sql
+    SELECT MIN(year_released), MAX(year_released)
+    FROM songs;
+    ```
+
+- Now we select distinct values for the year_released from the table & order by year.
+    ```sql
+    SELECT DISTINCT year_released
+    FROM songs
+    ORDER BY year_released
+    ```
+    - we notice that `0` was used for the songs whith an unknown release year.
+    - We also can know how many songs have an unknown release year : 5320
+    - So we will remove these songs from our table.
+
+- Remove songs with year_released = 0
+    ```sql
+    DELETE FROM songs
+    WHERE year_released = '0';
+    ```
+
+- Comments in SQL :
+    ```sql
+    -- single line comment
+    /*
+    Multi
+    Line
+    comment*
+    /
+    ```
+
+- General form of the `DELETE` statement.
+    ```sql
+    DELETE FROM table_name
+    WHERE conditoion (s);
+
+    /*
+    NOTE : 
+     > DELETE removes rows, not columns
+     > "WHERE" clause determines which rows will be deleted.
+     > Warning: No WHERE clause means ALL rows will be deleted...permanently!
+    */
+    ```
+- We continiue to check the other columns for clean up, & now check the `tempo` column
+    ```sql
+    SELECT MIN(tempo), MAX(tempo)
+    FROM songs
+    ```
+
+- There seems to be songs with `0` tempo, that must sound a lot like one hand clapping in a forest with nobody around.
+- A quick count tells us that there are `12` such songs...then will be deleted.
+- Similarly we do it for `duration` column, no amamoly
+- Now we check for loudness
+    ```sql
+    SELECT MIN(loudness), MAX(loudness),
+    FROM songs;
+    ```
+- To inspec the song where loudness > 0, which means no sound.
+    ```sql
+    SELECT *
+    FROM songs
+    WHERE loudness > '0';
+    ```
+- There seems to be only one song, so we replace the `SELECT` word from above query to `DELETE`.
+- Now that we have deleted the rows of the problamatic data, we ask ourselves the following questions : 
+
+`Stopped at L: 7:03`
+
+
 
 ### <u> __Summary from Note book LLM__ </u>
 
