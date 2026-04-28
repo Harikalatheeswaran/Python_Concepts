@@ -31,28 +31,30 @@ Act as a technical expert and knowledge base architect.** Based on the provided 
 1. [SQL quick overview](#1-sql-a-quick-overview)
 2. [Relational Databases : How to choose?](#2-relational-databases--how-to-choose)
 3. [PostgreSQL - Installation & Overview](#3-postgresql---installation--overview)
-4. [SQL `SELECT` Tutorial](#4-sql-select-tutorial) 
+4. [SQL **_SELECT_** Tutorial](#4-sql-select-tutorial) 
     - Topics : 
     ```
     ORDER BY, LIMIT, COUNT
     ```
-5. [SQL `SELECT` Tutorial : Part 2](#5-sql-select-tutorial--part-2)
+5. [SQL **_SELECT_** Tutorial : Part 2](#5-sql-select-tutorial--part-2)
     - Topics :
     ```
     > Funtions : COUNT, MIN, MAX, AVG, SUM
     > Keywords : DISTINCT, BETWEEN, LIKE
     ```
-6. [SQL `INSERT INTO` Statement](#6-sql-insert-into-statement)
+6. [SQL **_INSERT INTO_** Statement](#6-sql-insert-into-statement)
     - Topics :
     ```
     > Topics related to INSERT INTO command. 
     > Python Program to test the speed 10k separates insers & single query to update 10k rows.
     ```
-7. [SQL `UPDATE` Statement](#7-sql-update-statement)
-8. [SQL `DELETE` Statement](#08-sql-delete-qurey)
+7. [SQL **_UPDATE_** Statement](#7-sql-update-statement)
+8. [SQL **_DELETE_** Statement](#08-sql-delete-qurey)
     - Topics :
     ```
     > GROUP BY , usage.
+    > AVG function
+    > ROUND function
     ```
 9. 
 ---
@@ -914,12 +916,16 @@ If you do not inclucde a WHERE clause, the change will apply to every row in the
     ```
 - There seems to be only one song, so we replace the `SELECT` word from above query to `DELETE`.
 - Now that we have deleted the rows of the problamatic data, we ask ourselves the following questions : 
-
-`Stopped at L: 7:03`
-
-
-
-### <u> __Summary from Note book LLM__ </u>
+    1. How has the temp changed over time?
+        - To answer this, we will select the `year_released` & avg tempo from the song table.
+        ```sql
+        SELECT year_released, AVG(tempo),
+        FROM song
+        GROUP BY year_released
+        ORDER BY year_released;
+        ```
+        - This query will aggregate the data by the `year_released` & then return a single row, for each batch of rows.
+        - We can use the `ROUND` function to round the avg tempo to an integer
 
 ---
 ---
