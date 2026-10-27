@@ -26,6 +26,26 @@ Act as a technical expert and knowledge base architect.** Based on the provided 
 ```
 ---
 
+## <u>*__Amazing Tips !!!__*</u>
+
+1. To get Metadat of the table
+```sql
+
+SELECT *
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'songs';
+```
+
+2. If you want to uderstand all the columns present inside the a particular table we do : 
+```sql
+
+SELECT COLUMN_NAME
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'songs';
+```
+
+---
+
 ## <u>*__Contents__*</u>
 
 1. [SQL quick overview](#1-sql-a-quick-overview)
@@ -915,6 +935,11 @@ If you do not inclucde a WHERE clause, the change will apply to every row in the
     WHERE loudness > '0';
     ```
 - There seems to be only one song, so we replace the `SELECT` word from above query to `DELETE`.
+    ```sql
+    DELETE *
+    FROM songs
+    WHERE loudness > '0';
+    ```
 - Now that we have deleted the rows of the problamatic data, we ask ourselves the following questions : 
     1. How has the temp changed over time?
         - To answer this, we will select the `year_released` & avg tempo from the song table.
@@ -926,6 +951,11 @@ If you do not inclucde a WHERE clause, the change will apply to every row in the
         ```
         - This query will aggregate the data by the `year_released` & then return a single row, for each batch of rows.
         - We can use the `ROUND` function to round the avg tempo to an integer
+`Stopped at L: 7:03`
+
+
+
+### <u> __Summary from Note book LLM__ </u>
 
 ---
 ---
