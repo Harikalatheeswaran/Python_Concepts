@@ -941,7 +941,7 @@ If you do not inclucde a WHERE clause, the change will apply to every row in the
     WHERE loudness > '0';
     ```
 - Now that we have deleted the rows of the problamatic data, we ask ourselves the following questions : 
-    1. How has the temp changed over time?
+    1. How has the tempo has  changed over time?
         - To answer this, we will select the `year_released` & avg tempo from the song table.
         ```sql
         SELECT year_released, AVG(tempo),
